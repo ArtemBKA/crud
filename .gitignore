@@ -1,0 +1,5 @@
+$ git status
+/.idea/*
+/target/*
+/src/main/resources/hibernate.cnf.properties
+/crud.iml
