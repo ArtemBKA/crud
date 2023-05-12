@@ -25,7 +25,6 @@ import java.util.Properties;
 @ComponentScan("web")
 @PropertySource("classpath:hibernate.cnf.properties")
 @EnableTransactionManagement
-@EnableJpaRepositories("web.repositories")
 public class WebConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
