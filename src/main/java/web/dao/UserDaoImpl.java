@@ -1,75 +1,35 @@
 package web.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 import web.models.User;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Component
+@Repository
 public class UserDaoImpl implements UserDao {
-    private final EntityManagerFactory emf;
 
-    @Autowired
-    public UserDaoImpl(EntityManagerFactory emf) {
-        this.emf = emf;
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    public void createUser(User user) {
+        entityManager.persist(user);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<User> getUsers() {
-        EntityManager manager = emf.createEntityManager();
-        return manager.createQuery("select u from User u", User.class).getResultList();
+    public void deleteUser(User user) { entityManager.remove(user); }
+
+    @Override
+    public void updateUser(User user) { entityManager.merge(user); }
+
+    @Override
+    public User getUser(long id) {
+        return entityManager.createQuery("select u from User u where u.id=:id", User.class).setParameter("id", id).getSingleResult();
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public User getUserById(int id) {
-        EntityManager manager = emf.createEntityManager();
-        return manager.find(User.class, id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public User getUserByEmail(String email) {
-        EntityManager manager = emf.createEntityManager();
-        User user = null;
-        TypedQuery<User> query = manager.createQuery("select u from User u where u.email = ?1", User.class);
-        query.setParameter(1, email);
-        try {
-            user = query.getSingleResult();
-        } catch (NoResultException ignore) {
-            /* NOP */
-        }
-        return user;
-    }
-
-    @Override
-    @Transactional
-    public void saveUser(User user) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.persist(user);
-        manager.getTransaction().commit();
-    }
-
-    @Override
-    @Transactional
-    public void updateUser(User user) {
-        EntityManager manager = emf.createEntityManager();
-        manager.getTransaction().begin();
-        manager.merge(user);
-        manager.getTransaction().commit();
-    }
-
-    @Override
-    @Transactional
-    public void deleteUser(int id) {
-        EntityManager manager = emf.createEntityManager();
-        User user = getUserById(id);
-        manager.getTransaction().begin();
-        manager.remove(manager.contains(user) ? user : manager.merge(user));
-        manager.getTransaction().commit();
+    public List<User> getAllUsers() {
+        return entityManager.createQuery("select u from User u", User.class).getResultList();
     }
 }

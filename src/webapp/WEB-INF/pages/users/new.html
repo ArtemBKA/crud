@@ -8,17 +8,14 @@
 <form th:method="POST" th:action="@{/users}" th:object="${user}">
     <label for="email">Enter email: </label>
     <input type="text" th:field="*{email}" id="email">
-    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</div>
     <br/>
 
     <label for="firstname">Enter name: </label>
     <input type="text" th:field="*{firstname}" id="firstname">
-    <div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">firstname error</div>
     <br/>
 
     <label for="lastname">Enter lastname: </label>
     <input type="text" th:field="*{lastname}" id="lastname">
-    <div style="color:red" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">firstname error</div>
     <br/>
 
     <input type="submit" value="Create!">

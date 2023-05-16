@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -23,7 +22,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @ComponentScan("web")
-@PropertySource("classpath:hibernate.cnf.properties")
+@PropertySource("classpath:database.properties")
 @EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
 
@@ -72,8 +71,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getRequiredProperty("%hibernate.dialect%"));
-        properties.put("hibernate.show.sql", environment.getRequiredProperty("%hibernate.show.sql%"));
         return properties;
     }
 

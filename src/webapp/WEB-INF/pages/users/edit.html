@@ -9,17 +9,14 @@
 <form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
     <label for="email">Email: </label>
     <input type="text" th:field="*{email}" id="email">
-    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</div>
     <br/>
 
     <label for="firstname">Firstname: </label>
     <input type="text" th:field="*{firstname}" id="firstname">
-    <div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">firstname error</div>
     <br/>
 
     <label for="lastname">Lastname: </label>
     <input type="text" th:field="*{lastname}" id="lastname">
-    <div style="color:red" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">lastname error</div>
     <br/>
 
     <input type="submit" value="Update user">
