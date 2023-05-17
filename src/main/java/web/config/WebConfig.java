@@ -25,7 +25,6 @@ import java.util.Properties;
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
-
     private final ApplicationContext applicationContext;
     private final Environment environment;
 
@@ -69,11 +68,6 @@ public class WebConfig implements WebMvcConfigurer {
         return dataSource;
     }
 
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        return properties;
-    }
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -81,7 +75,6 @@ public class WebConfig implements WebMvcConfigurer {
         em.setPackagesToScan("web.models");
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(hibernateProperties());
         return em;
     }
 

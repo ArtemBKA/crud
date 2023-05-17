@@ -1,4 +1,3 @@
 $ git status
 /.idea/*
 /target/*
-/crud.iml
