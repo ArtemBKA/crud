@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserDao userDAO;
+    private final UserDao userDAO;
 
     @Autowired
     public UserServiceImpl(UserDao userDAO) {
